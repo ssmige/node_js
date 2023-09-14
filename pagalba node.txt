@@ -1,0 +1,9 @@
+npm init -y // kad instaliuoti package.json
+
+npm i express
+
+npm i cors
+
+ npm i --save-dev nodemon
+
+import express from "express";
