@@ -7,3 +7,5 @@ npm i cors
  npm i --save-dev nodemon
 
 import express from "express";
+
+ nodemon server.js
