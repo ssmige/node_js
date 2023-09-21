@@ -1,4 +1,5 @@
 import Person from "./models/Person.js";
+import Car from "./models/Car.js";
 
 export async function addNewPerson(req, res) {
   const { name, age } = req.body;
@@ -14,6 +15,22 @@ export async function addNewPerson(req, res) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+}
 
-  res.json({ message: "veikia" });
+export async function addNewCar(req, res) {
+  const { brand, model, engine, power, year } = req.body;
+
+  try {
+    const newCar = new Car({
+      brand,
+      model,
+      engine,
+      power,
+      year,
+    });
+    await newCar.save();
+    res.json(newCar);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }

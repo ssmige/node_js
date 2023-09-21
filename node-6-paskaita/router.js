@@ -1,8 +1,10 @@
 import express from "express";
-import { addNewPerson } from "./controllers.js";
+import { addNewPerson, addNewCar } from "./controllers.js";
 
 const router = express.Router();
 
-router.post("/", addNewPerson);
+// router.post("/", addNewPerson);
+
+router.post("/", addNewCar);
 
 export default router;
