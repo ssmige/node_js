@@ -5,12 +5,12 @@
 
 // Kolekcijoje "people" dokumentas turės: vardą, pavardę ir amžių.
 
-
 import express from "express";
+import { addNewAsmuo, getAsmuo } from "./controllers.js";
 
 const router = express.Router();
 
-router.post("/");
-router.get("/");
+router.post("/asmuo", addNewAsmuo);
+router.get("/asmuo", getAsmuo);
 
 export default router;
