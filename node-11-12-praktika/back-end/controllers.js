@@ -23,8 +23,6 @@ export async function getService(req, res) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-
-  res.json(service);
 }
 
 export async function deleteServiceById(req, res) {
@@ -49,10 +47,9 @@ export async function createUser(req, res) {
       service_id,
     });
 
-    // const service = Service.findById(service_id);
-    // service.users.push(user._id);
-
-    // await service.save();
+    const service = await Service.findById(service_id);
+    service.user_id.push(user._id);
+    await service.save();
 
     await user.save();
     res.json(user);
@@ -61,29 +58,35 @@ export async function createUser(req, res) {
   }
 }
 
-// export async function createUser(req, res) {
-//   const { name, surname, email, service_id } = req.body;
+export async function getUsers(req, res) {
+  const user = req.params;
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
-//   try {
-//     const user = new User({
-//       name,
-//       surname,
-//       email,
-//       service_id: [new mongoose.Types.ObjectId(service_id)],
-//     });
+export async function getUsersByOrderAsc(req, res) {
+  const { surname } = req.query;
 
-//     const service = await Service.findById(service_id);
+  try {
+    const UsersOrderedAsc = await User.find().sort({ surname: 1 });
 
-//     if (!service) {
-//       return res.status(404).json({ error: "Service not found" });
-//     }
+    res.json(UsersOrderedAsc);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+export async function getUsersByOrderDesc(req, res) {
+  const { surname } = req.query;
 
-//     service.users.push(user.user_id);
+  try {
+    const UsersOrderedDesc = await User.find().sort({ surname: -1 });
 
-//     await service.save();
-//     await user.save();
-//     res.json(user);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// }
+    res.json(UsersOrderedDesc);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
